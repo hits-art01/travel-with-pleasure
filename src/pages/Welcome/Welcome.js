@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import style from "./welcome.module.css";
 import Head from "../../components/Head/Head";
-import { Tabs, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";
 import ChatImg from "../../components/assets/ChatWelcome.svg";
 import ShareImg from "../../components/assets/Share.svg";
