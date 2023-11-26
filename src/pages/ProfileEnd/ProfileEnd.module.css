@@ -1,0 +1,42 @@
+
+
+
+.wrapper {
+    position: relative;
+    width: 35vw;
+}
+
+.welcome {
+    position: relative;
+    /*margin-bottom: 70px;*/
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 42px;
+    text-align: center;
+}
+
+
+.description {
+    height: 200px;
+    margin-top: 80px;
+    margin-bottom: 10px;
+}
+
+
+.step {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 35px;
+    text-align: center;
+}
+
+.additional {
+    font-size: 20px;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .wrapper {
+        width: 80vw;
+    }
+}
