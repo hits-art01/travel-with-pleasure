@@ -1,0 +1,37 @@
+.mobile_version_bout {
+  width: 375px;
+  /* height: 812px; */
+  height: 100vh;
+}
+
+.mobile_version_header {
+  /* heigt: 63px; */
+  width: 100vw;
+  padding: 12px;
+  border-bottom: 1px solid var(--main-accent-red, #fd6d5d);
+}
+.chat_about_header {
+  /* heigt: 63px; */
+  width: 100vw;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--main-accent-red, #fd6d5d);
+}
+
+.header_content {
+  display: flex;
+  align-items: center;
+}
+
+.header_back_btn {
+  margin: 0 20px;
+}
+
+.header_title {
+  color: var(--text-color, #0b1644);
+  margin: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 20px;
+  margin-top: -4px;
+}

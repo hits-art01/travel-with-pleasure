@@ -11,6 +11,9 @@ import Profile from "../pages/SignUp/Profile/Profile";
 import SignUp from "../pages/SignUp/SignUp";
 import SignUpForm from "../pages/SignUp/SignUpForm/SignUpForm";
 import Welcome from "../pages/Welcome/Welcome";
+import MobileChatSettings from "../pages/MobileChatSettings/MobileChatAbout";
+import MobileChat from "../pages/MobileChat/MobileChat";
+import MobileCreateChat from "../pages/MobileCreateChat/MobileCreateChat";
 
 export const privateRoutesArr = [
   { path: "/", element: <MainPage /> },
@@ -25,4 +28,7 @@ export const privateRoutesArr = [
   { path: "/discover", element: <Guest /> },
   { path: "/choose-chat-theme", element: <ChatTheme /> },
   { path: "/chats", element: <ChatMainPage /> },
+  { path: "/chats/:title", element: <MobileChat /> },
+  { path: "/chats/:title/about", element: <MobileChatSettings /> },
+  { path: "/chats/createGroupChat", element: <MobileCreateChat /> },
 ];

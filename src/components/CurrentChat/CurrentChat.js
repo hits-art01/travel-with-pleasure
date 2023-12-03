@@ -11,19 +11,23 @@ import { useDispatch, useSelector } from "react-redux";
 const CurrentChat = () => {
   const current = useSelector((state) => state.current.chat);
   const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false);
-
+  const isOpenCreate = useSelector((state) => state.createModal.isOpened);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setIsChatSettingsVisible(false);
   }, [current]);
   return (
-    <div className={style.chat}>
+    <div
+      className={
+        isOpenCreate ? `${style.chat} ${style.blured}` : `${style.chat}`
+      }
+    >
       <div className={style.chat_header}>
         <div className={style.chat_header_wrap}>
           <div className={style.chat_header_info}>
             <div className={style.chat_header_avatar}>
-              <img src={current.photo} />
+              <img src={current.avatar} />
             </div>
             <div className={style.chat_header_titles}>
               <div className={style.chat_header_name}>{current.name}</div>
@@ -107,7 +111,13 @@ const CurrentChat = () => {
           placeholder="Enter new message"
         />
       </div> */}
-      <div className={style.chat_footer}>
+      <div
+        className={
+          isChatSettingsVisible
+            ? `${style.chat_footer} ${style.blured}`
+            : `${style.chat_footer}`
+        }
+      >
         <form className={style.chat_form}>
           <input type="text" placeholder="Enter new message" />
           <div className={style.form_files}>
