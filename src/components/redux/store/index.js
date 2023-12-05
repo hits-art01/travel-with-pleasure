@@ -4,10 +4,11 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { themesReducer } from "../reducers/ThemesReducer";
 import { currentChatReducer } from "../reducers/CurrentChatReducer";
 import { profileReducer } from "../reducers/ProfileReducer";
-import { groupChatsReducer } from "../reducers/GroupChatsReducer";
 import { createModalReducer } from "../reducers/CreateModalReducer";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { userGroupChatsReducer } from "../reducers/UserGroupChatsReducer";
+import { groupsReducer } from "../reducers/GroupsReducer";
 
 const Root = combineReducers({
   mobileNav: MobileNavReducer,
@@ -15,8 +16,9 @@ const Root = combineReducers({
   themes: themesReducer,
   current: currentChatReducer,
   userProfile: profileReducer,
-  groupChats: groupChatsReducer,
+  groupChats: userGroupChatsReducer,
   createModal: createModalReducer,
+  allGroups: groupsReducer,
 });
 
 export const store = createStore(

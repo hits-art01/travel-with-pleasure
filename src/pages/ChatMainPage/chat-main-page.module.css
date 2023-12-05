@@ -117,20 +117,24 @@ select:focus {
 
 .aside_input_wrap {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  width: 350px;
+  /* margin-bottom: 20px; */
+  border-radius: 8px;
+  border: 1px solid var(--secondary-background-illustration, #d7d2e6);
+  padding: 10px;
+}
+.aside_input_wrap button {
+  background: #fff;
+  border: none;
 }
 
 .aside_chats_input {
-  width: 350px;
-  padding: 10px;
-  margin-bottom: 20px;
-
+  width: 100%;
+  border: none;
   color: #d7d2e6;
-  border-radius: 8px;
-  border: 1px solid var(--secondary-background-illustration, #d7d2e6);
 
-  background-image: url("../../components/assets/search\ icon1.png");
   background-repeat: no-repeat;
   background-position: 330px;
 }
@@ -336,6 +340,16 @@ input:focus {
   color: var(--main-accent-red, #fd6d5d);
 }
 
+.recently_searched {
+  padding: 10px;
+
+  color: var(--text-color, #0b1644);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 10px;
+}
+
 /* MOBILE VERSION */
 
 .mobile_version {
@@ -385,7 +399,7 @@ input:focus {
 }
 
 .mobile_version_wrap {
-  max-width: 700px;
+  /* width: 100vw; */
   margin: 0 auto;
 }
 

@@ -1,6 +1,6 @@
 const groupChatsState = {
-  chats: {
-    userChats: [
+  userChats: {
+    chats: [
       {
         id: "",
         adminId: [""],
@@ -14,19 +14,19 @@ const groupChatsState = {
   },
 };
 
-export const groupChatsReducer = (state = groupChatsState, action) => {
+export const userGroupChatsReducer = (state = groupChatsState, action) => {
   switch (action.type) {
     case "GET_GROUP_CHATS":
       return {
         ...state,
-        chats: action.payload,
+        userChats: action.payload,
       };
 
     case "REMOVE_GROUP_CHATS":
       return {
         ...state,
-        chats: {
-          userChats: [
+        userChats: {
+          chats: [
             {
               id: "",
               adminId: [""],

@@ -23,7 +23,7 @@ import {
 
 const MobileVersion = () => {
   const currentChat = useSelector((state) => state.current);
-  const groupChats = useSelector((state) => state.groupChats.chats.userChats);
+  const groupChats = useSelector((state) => state.groupChats.userChats.chats);
   const userProfile = useSelector((state) => state.userProfile.profile);
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const dispatch = useDispatch();

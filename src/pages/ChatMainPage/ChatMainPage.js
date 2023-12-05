@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "./chat-main-page.module.css";
 import Head from "../../components/Head/Head";
-import axios from "axios";
-import AvatarExample from "../../components/assets/AvatarExample.png";
-import UkraineChat from "../../components/assets/UkraineChat.png";
-import AbroadChat from "../../components/assets/AbroadChat.png";
-import ExtremeChat from "../../components/assets/ExtremeChat.png";
 import SettingsIcon from "../../components/assets/SettingsIcon.png";
 import HelpIcon from "../../components/assets/help icon.png";
 import Chatbg from "../../components/assets/Chatbg.png";
@@ -15,21 +10,21 @@ import LocationIcon from "../../components/assets/person_pin icon.png";
 import SettingsChatIcon from "../../components/assets/settings icon.png";
 import BlockedIcon from "../../components/assets/Blocked.png";
 import SignOutImg from "../../components/assets/move_item icon.png";
-
+import Search from "../../components/assets/search_mobile.png";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGroupChats,
+  getGroups,
   getUserProfile,
   openModalCreate,
   setCurrentChat,
   setUserProfile,
 } from "../../components/redux/actions/actions";
 import CurrentChat from "../../components/CurrentChat/CurrentChat";
-import { BASE_URL } from "../../env";
-import { useMemo } from "react";
+
 import MobileVersion from "./MobileVersion";
-import { useLayoutEffect } from "react";
+
 import CreateChat from "../../components/CreateChat/CreateChat";
 import { useWindowSize } from "react-use";
 
@@ -41,12 +36,16 @@ const ChatMainPage = () => {
   const navigate = useNavigate();
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const [query, setQuery] = useState("");
-  const groupChats = useSelector((state) => state.groupChats.chats.userChats);
+  const groupChats = useSelector((state) => state.groupChats.userChats.chats);
+  const allGroups = useSelector((state) => state.allGroups.groups.chats);
   const { width } = useWindowSize();
+  const [isSearch, setIsSearch] = useState(false);
   const [searched, setSearched] = useState([]);
+  const [keyDown, steKeyDown] = useState(false);
 
   const handleClickChat = (chat) => {
     dispatch(setCurrentChat(chat));
+    setIsSearch(false);
   };
 
   const handleClickModal = () => {
@@ -58,28 +57,32 @@ const ChatMainPage = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    if (groupChats) {
-      const results = groupChats.filter((item) =>
+  const handleSearch = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const handleStartSearch = (e) => {
+    e.stopPropagation();
+    setIsSearch(true);
+    setSearched([]);
+    dispatch(getGroups());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (allGroups.length) {
+      const results = allGroups.filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
       );
       setSearched(results);
     }
-    console.log(groupChats);
-  }, [query, groupChats]);
-
-  const handleSearch = (event) => {
-    setQuery(event.target.value);
+    console.log(query);
   };
 
   useEffect(() => {
     dispatch(getUserProfile());
     dispatch(getGroupChats());
   }, []);
-
-  const handleChatCreated = () => {
-    dispatch(getGroupChats());
-  };
 
   useEffect(() => {
     dispatch(getGroupChats());
@@ -97,9 +100,7 @@ const ChatMainPage = () => {
         <div className={style.chat_main_page}>
           <Head />
           <div className={style.chat_main_wrap}>
-            {isOpenCreate ? (
-              <CreateChat onChatCreated={handleChatCreated} />
-            ) : null}
+            {isOpenCreate ? <CreateChat /> : null}
             <div className={style.chat_main_content}>
               <aside
                 className={
@@ -207,38 +208,75 @@ const ChatMainPage = () => {
                         Private messages
                       </option>
                     </select>
-                    <div className={style.aside_inpit_wrap}>
+                    <form
+                      className={style.aside_input_wrap}
+                      onSubmit={handleSubmit}
+                      id="formSearch"
+                    >
                       <input
                         type="text"
                         placeholder="Search"
+                        onClick={handleStartSearch}
                         value={query}
                         onChange={handleSearch}
                         className={style.aside_chats_input}
                       />
-                    </div>
+                      <button type="submit" form="formSearch">
+                        <img src={Search} />
+                      </button>
+                    </form>
                   </div>
                   <div className={style.aside_chats_wrap}>
-                    {groupChats ? (
-                      searched.map((chat) => (
-                        <div
-                          key={chat.name}
-                          className={
-                            currentChat.chat.name === chat.name
-                              ? `${style.aside_chat} ${style.aside_chat_active}`
-                              : `${style.aside_chat}`
-                          }
-                          onClick={() => handleClickChat(chat)}
-                        >
-                          <div className={style.aside_chat_icon}>
-                            <img src={chat.avatar} />
+                    {isSearch ? (
+                      searched.length > 0 ? (
+                        searched.map((chat) => (
+                          <div
+                            key={chat.name}
+                            className={`${style.aside_chat} ${
+                              currentChat.chat.name === chat.name
+                                ? style.aside_chat_active
+                                : ""
+                            }`}
+                            onClick={() => handleClickChat(chat)}
+                          >
+                            <div className={style.aside_chat_icon}>
+                              <img src={chat.avatar} alt={chat.name} />
+                            </div>
+                            <div className={style.aside_chat_name}>
+                              {chat.name}
+                            </div>
                           </div>
-                          <div className={style.aside_chat_name}>
-                            {chat.name}
-                          </div>
+                        ))
+                      ) : (
+                        <div className={style.recently_searched}>
+                          Recently searched
                         </div>
-                      ))
+                      )
+                    ) : groupChats ? (
+                      groupChats.length > 0 ? (
+                        groupChats.map((chat) => (
+                          <div
+                            key={chat.name}
+                            className={`${style.aside_chat} ${
+                              currentChat.chat.name === chat.name
+                                ? style.aside_chat_active
+                                : ""
+                            }`}
+                            onClick={() => handleClickChat(chat)}
+                          >
+                            <div className={style.aside_chat_icon}>
+                              <img src={chat.avatar} alt={chat.name} />
+                            </div>
+                            <div className={style.aside_chat_name}>
+                              {chat.name}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div>There are no chats yet</div>
+                      )
                     ) : (
-                      <div>There are not chats yet</div>
+                      <div>nothing found</div>
                     )}
                   </div>
                 </div>

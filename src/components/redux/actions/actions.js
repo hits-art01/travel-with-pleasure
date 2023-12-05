@@ -58,7 +58,6 @@ export const getGroupChats = () => {
   return async function (dispatch) {
     try {
       const token = JSON.parse(localStorage.getItem("access"));
-      // console.log("from getUser:", token);
 
       const req = await axios.get(`${BASE_URL}/myGroups`, {
         headers: {
@@ -67,8 +66,27 @@ export const getGroupChats = () => {
         },
       });
 
-      // setUserProfile(req.data);
       dispatch({ type: "GET_GROUP_CHATS", payload: req.data });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+};
+export const getGroups = () => {
+  return async function (dispatch) {
+    try {
+      const token = JSON.parse(localStorage.getItem("access"));
+      // console.log("from getUser:", token);
+
+      const req = await axios.get(`${BASE_URL}/allCroups`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+
+      // setUserProfile(req.data);
+      dispatch({ type: "GET_GROUPS", payload: req.data });
     } catch (error) {
       console.error("Error:", error);
     }
