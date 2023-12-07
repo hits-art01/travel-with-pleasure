@@ -5,6 +5,7 @@ import SearchIcon from "../assets/search icon1.png";
 import NotificationIcon from "../assets/toggle_off icon.png";
 import AudioIcon from "../assets/mic icon.png";
 import FileIcon from "../assets/attach_file icon.png";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,6 +14,7 @@ const CurrentChat = () => {
   const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false);
   const isOpenCreate = useSelector((state) => state.createModal.isOpened);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsChatSettingsVisible(false);
@@ -40,7 +42,10 @@ const CurrentChat = () => {
             </div>
             <div
               className={style.chat_header_settings}
-              onClick={() => setIsChatSettingsVisible(!isChatSettingsVisible)}
+              onClick={() => {
+                // navigate(`/chats/${current.name}/about`);
+                setIsChatSettingsVisible(!isChatSettingsVisible);
+              }}
             >
               <img src={SettingsIcon} />
               {isChatSettingsVisible ? (

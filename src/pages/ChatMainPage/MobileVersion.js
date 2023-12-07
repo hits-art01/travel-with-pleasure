@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   getGroupChats,
+  getGroups,
   setCurrentChat,
 } from "../../components/redux/actions/actions";
 
@@ -162,7 +163,13 @@ const MobileVersion = () => {
             <div className={style.header_logo}>
               <img src={Logo} />
             </div>
-            <div className={style.header_search}>
+            <div
+              className={style.header_search}
+              onClick={() => {
+                navigate("/chats/search");
+                dispatch(getGroups());
+              }}
+            >
               <img src={Search} />
             </div>
           </div>

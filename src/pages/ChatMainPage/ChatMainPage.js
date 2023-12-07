@@ -41,12 +41,26 @@ const ChatMainPage = () => {
   const { width } = useWindowSize();
   const [isSearch, setIsSearch] = useState(false);
   const [searched, setSearched] = useState([]);
-  const [keyDown, steKeyDown] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [isChatsSearched, setIsChatSearched] = useState(false);
+  const [randomChat, setRandomChat] = useState(null);
+
+  const { pathname } = useLocation();
 
   const handleClickChat = (chat) => {
     dispatch(setCurrentChat(chat));
     setIsSearch(false);
+    setIsChatSearched(false);
+    setQuery("");
   };
+
+  // useEffect(() => {
+  //   if (pathname === "/chats/search") {
+  //     setIsSearch(true);
+  //   } else {
+  //     setIsSearch(isSearch);
+  //   }
+  // }, [pathname]);
 
   const handleClickModal = () => {
     setIsSettingsVisible(!isSettingsVisible);
@@ -54,6 +68,7 @@ const ChatMainPage = () => {
 
   const signOut = () => {
     localStorage.removeItem("access");
+    localStorage.removeItem("searchHistory");
     navigate("/");
   };
 
@@ -66,18 +81,38 @@ const ChatMainPage = () => {
     setIsSearch(true);
     setSearched([]);
     dispatch(getGroups());
+    setRandomChat(allGroups[Math.floor(Math.random() * allGroups.length)]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (allGroups.length) {
+    if (allGroups.length && query) {
       const results = allGroups.filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
       );
       setSearched(results);
+      setIsChatSearched(true);
+
+      if (query.trim() !== "") {
+        const newHistory = [query, ...searchHistory.slice(0, 3)];
+        setSearchHistory(newHistory);
+
+        localStorage.setItem("searchHistory", JSON.stringify(newHistory));
+      }
     }
+
     console.log(query);
   };
+
+  const handleSetQuery = (value) => {
+    setQuery(value);
+  };
+
+  useEffect(() => {
+    const storedHistory =
+      JSON.parse(localStorage.getItem("searchHistory")) || [];
+    setSearchHistory(storedHistory);
+  }, []);
 
   useEffect(() => {
     dispatch(getUserProfile());
@@ -233,7 +268,7 @@ const ChatMainPage = () => {
                           <div
                             key={chat.name}
                             className={`${style.aside_chat} ${
-                              currentChat.chat.name === chat.name
+                              currentChat && currentChat.chat.name === chat.name
                                 ? style.aside_chat_active
                                 : ""
                             }`}
@@ -248,8 +283,54 @@ const ChatMainPage = () => {
                           </div>
                         ))
                       ) : (
-                        <div className={style.recently_searched}>
-                          Recently searched
+                        <div className={style.chats_searched}>
+                          {searched.length === 0 && isChatsSearched ? (
+                            <div className={style.search_nothing}>
+                              {"nothing found("}
+                            </div>
+                          ) : (
+                            <>
+                              <div className={style.recently_searched}>
+                                <p>Recently searched</p>
+                                <ul className={style.recently_searched_history}>
+                                  {searchHistory.map((item, index) => (
+                                    <li
+                                      onClick={() => handleSetQuery(item)}
+                                      key={index}
+                                      className={style.searched_item}
+                                    >
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div className={style.search_might_like}>
+                                you might like it
+                                {randomChat.name ? (
+                                  <div
+                                    key={randomChat.name}
+                                    className={`${style.aside_chat} ${
+                                      currentChat &&
+                                      currentChat.chat.name === randomChat.name
+                                        ? style.aside_chat_active
+                                        : ""
+                                    }`}
+                                    onClick={() => handleClickChat(randomChat)}
+                                  >
+                                    <div className={style.aside_chat_icon}>
+                                      <img
+                                        src={randomChat.avatar}
+                                        alt={randomChat.name}
+                                      />
+                                    </div>
+                                    <div className={style.aside_chat_name}>
+                                      {randomChat.name}
+                                    </div>
+                                  </div>
+                                ) : null}
+                              </div>
+                            </>
+                          )}
                         </div>
                       )
                     ) : groupChats ? (
@@ -258,7 +339,7 @@ const ChatMainPage = () => {
                           <div
                             key={chat.name}
                             className={`${style.aside_chat} ${
-                              currentChat.chat.name === chat.name
+                              currentChat && currentChat.chat.name === chat.name
                                 ? style.aside_chat_active
                                 : ""
                             }`}

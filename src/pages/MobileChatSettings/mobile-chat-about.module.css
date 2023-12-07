@@ -7,6 +7,8 @@
 .mobile_version_header {
   /* heigt: 63px; */
   width: 100vw;
+  height: 60px;
+  box-sizing: border-box;
   padding: 12px;
   border-bottom: 1px solid var(--main-accent-red, #fd6d5d);
 }
