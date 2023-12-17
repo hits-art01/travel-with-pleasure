@@ -43,7 +43,6 @@ const CurrentChat = () => {
             <div
               className={style.chat_header_settings}
               onClick={() => {
-                // navigate(`/chats/${current.name}/about`);
                 setIsChatSettingsVisible(!isChatSettingsVisible);
               }}
             >

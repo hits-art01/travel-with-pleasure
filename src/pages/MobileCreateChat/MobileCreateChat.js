@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./mobile-create-chat.module.css";
 import AddAvatarImg from "../../components/assets/AddChatAvatarIcon.svg";
-import BackArrowIcon from "../../components/assets/arrow_back icon.png";
+import BackArrowIcon from "../../components/assets/arrow_back icon.svg";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";

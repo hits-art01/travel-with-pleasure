@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "../ChatMainPage/chat-main-page.module.css";
-import BackBtn from "../../components/assets/arrow_back icon.png";
+import BackBtn from "../../components/assets/arrow_back icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {

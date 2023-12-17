@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./mobile-chat.module.css";
 import { setCurrentChat } from "../../components/redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Search from "../../components/assets/search_mobile.png";
-import BackBtn from "../../components/assets/arrow_back icon.png";
+import BackBtn from "../../components/assets/arrow_back icon.svg";
 import EmptyChat from "../../components/assets/illustration empty chat.png";
 import FileIcon from "../../components/assets/attach_file icon.png";
 import AudioChat from "../../components/assets/mic icon.png";
@@ -14,6 +14,12 @@ const MobileChat = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentChat = useSelector((state) => state.current);
+
+  useEffect(() => {
+    if (!currentChat.chat.name) {
+      navigate("/chats");
+    }
+  }, [currentChat]);
 
   return (
     <div className={style.mobile_version_wrap}>
@@ -44,7 +50,9 @@ const MobileChat = () => {
                 <div className={style.header_chat_name}>
                   {currentChat.chat.name}
                 </div>
-                <div className={style.header_chat_members}>3 members</div>
+                <div className={style.header_chat_members}>
+                  {currentChat.chat.userIds.length} members
+                </div>
               </div>
             </div>
             <div className={style.header_search}>

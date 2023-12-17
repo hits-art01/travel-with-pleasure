@@ -4,12 +4,12 @@ import Head from "../../components/Head/Head";
 import SettingsIcon from "../../components/assets/SettingsIcon.png";
 import HelpIcon from "../../components/assets/help icon.png";
 import Chatbg from "../../components/assets/Chatbg.png";
-import NotificationsIcon from "../../components/assets/notifications icon.png";
+import NotificationsIcon from "../../components/assets/notifications icon.svg";
 import LanguageIcon from "../../components/assets/language icon.png";
 import LocationIcon from "../../components/assets/person_pin icon.png";
 import SettingsChatIcon from "../../components/assets/settings icon.png";
-import BlockedIcon from "../../components/assets/Blocked.png";
-import SignOutImg from "../../components/assets/move_item icon.png";
+import BlockedIcon from "../../components/assets/Blocked.svg";
+import SignOutImg from "../../components/assets/move_item icon.svg";
 import Search from "../../components/assets/search_mobile.png";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,22 +45,12 @@ const ChatMainPage = () => {
   const [isChatsSearched, setIsChatSearched] = useState(false);
   const [randomChat, setRandomChat] = useState(null);
 
-  const { pathname } = useLocation();
-
   const handleClickChat = (chat) => {
     dispatch(setCurrentChat(chat));
     setIsSearch(false);
     setIsChatSearched(false);
     setQuery("");
   };
-
-  // useEffect(() => {
-  //   if (pathname === "/chats/search") {
-  //     setIsSearch(true);
-  //   } else {
-  //     setIsSearch(isSearch);
-  //   }
-  // }, [pathname]);
 
   const handleClickModal = () => {
     setIsSettingsVisible(!isSettingsVisible);

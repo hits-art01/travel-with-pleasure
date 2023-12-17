@@ -3,16 +3,15 @@ import style from "./chat-main-page.module.css";
 import Burger from "../../common/Burger/Burger";
 import Logo from "../../components/assets/logo twp.svg";
 import Search from "../../components/assets/search_mobile.png";
-import BackBtn from "../../components/assets/arrow_back icon.png";
 import EmptyChat from "../../components/assets/illustration empty chat.png";
 import FileIcon from "../../components/assets/attach_file icon.png";
 import AudioChat from "../../components/assets/mic icon.png";
-import NotificationsIcon from "../../components/assets/notifications icon.png";
+import NotificationsIcon from "../../components/assets/notifications icon.svg";
 import LanguageIcon from "../../components/assets/language icon.png";
 import LocationIcon from "../../components/assets/person_pin icon.png";
 import SettingsChatIcon from "../../components/assets/settings icon.png";
-import BlockedIcon from "../../components/assets/Blocked.png";
-import SignOutImg from "../../components/assets/move_item icon.png";
+import BlockedIcon from "../../components/assets/Blocked.svg";
+import SignOutImg from "../../components/assets/move_item icon.svg";
 import HelpIcon from "../../components/assets/help icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -43,11 +42,10 @@ const MobileVersion = () => {
     localStorage.removeItem("access");
     navigate("/");
   };
-
-  // useEffect(() => {
-  //   dispatch(getGroupChats());
-  // }, []);
-
+  const handleHeaderSearch = () => {
+    navigate("/chats/search");
+    dispatch(getGroups());
+  };
   useEffect(() => {
     if (pathname === "/chats") {
       dispatch(setCurrentChat({ name: null, photo: null }));
@@ -163,13 +161,7 @@ const MobileVersion = () => {
             <div className={style.header_logo}>
               <img src={Logo} />
             </div>
-            <div
-              className={style.header_search}
-              onClick={() => {
-                navigate("/chats/search");
-                dispatch(getGroups());
-              }}
-            >
+            <div className={style.header_search} onClick={handleHeaderSearch}>
               <img src={Search} />
             </div>
           </div>
