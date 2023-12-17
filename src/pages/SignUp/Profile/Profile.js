@@ -125,6 +125,7 @@ const Profile = () => {
               </button>
               <button
                 className={`${style.button_skip} ${flex.centered_column}`}
+                onClick={() => navigate("/signup/account/profile/end")}
               >
                 Skip for now
               </button>
@@ -149,6 +150,7 @@ const Profile = () => {
               </button>
               <button
                 className={`${style.button_skip} ${flex.centered_column}`}
+                onClick={() => navigate("/signup/account/profile/end")}
               >
                 Skip for now
               </button>

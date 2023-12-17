@@ -5,25 +5,31 @@ import SearchIcon from "../assets/search icon1.png";
 import NotificationIcon from "../assets/toggle_off icon.png";
 import AudioIcon from "../assets/mic icon.png";
 import FileIcon from "../assets/attach_file icon.png";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
 const CurrentChat = () => {
   const current = useSelector((state) => state.current.chat);
   const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false);
-
+  const isOpenCreate = useSelector((state) => state.createModal.isOpened);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsChatSettingsVisible(false);
   }, [current]);
   return (
-    <div className={style.chat}>
+    <div
+      className={
+        isOpenCreate ? `${style.chat} ${style.blured}` : `${style.chat}`
+      }
+    >
       <div className={style.chat_header}>
         <div className={style.chat_header_wrap}>
           <div className={style.chat_header_info}>
             <div className={style.chat_header_avatar}>
-              <img src={current.photo} />
+              <img src={current.avatar} />
             </div>
             <div className={style.chat_header_titles}>
               <div className={style.chat_header_name}>{current.name}</div>
@@ -36,7 +42,9 @@ const CurrentChat = () => {
             </div>
             <div
               className={style.chat_header_settings}
-              onClick={() => setIsChatSettingsVisible(!isChatSettingsVisible)}
+              onClick={() => {
+                setIsChatSettingsVisible(!isChatSettingsVisible);
+              }}
             >
               <img src={SettingsIcon} />
               {isChatSettingsVisible ? (
@@ -107,7 +115,13 @@ const CurrentChat = () => {
           placeholder="Enter new message"
         />
       </div> */}
-      <div className={style.chat_footer}>
+      <div
+        className={
+          isChatSettingsVisible
+            ? `${style.chat_footer} ${style.blured}`
+            : `${style.chat_footer}`
+        }
+      >
         <form className={style.chat_form}>
           <input type="text" placeholder="Enter new message" />
           <div className={style.form_files}>
