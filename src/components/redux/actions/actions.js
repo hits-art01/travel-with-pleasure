@@ -1,6 +1,19 @@
+import { BASE_URL } from "../../../env";
+import axios from "axios";
+
 export const closeWindow = () => {
   return {
     type: "CLOSE",
+  };
+};
+export const closeCreateModal = () => {
+  return {
+    type: "CLOSE_MODAL_CREATE",
+  };
+};
+export const openModalCreate = () => {
+  return {
+    type: "OPEN_MODAL_CREATE",
   };
 };
 
@@ -36,7 +49,66 @@ export const setCurrentChat = (payload) => ({
   type: "SET_CURRENT_CHAT",
   payload,
 });
-export const setUserProfile = (payload) => ({
-  type: "SET_USER_PROFILE",
-  payload,
+
+export const clearState = () => ({
+  type: "REMOVE_GROUP_CHATS",
 });
+
+export const getGroupChats = () => {
+  return async function (dispatch) {
+    try {
+      const token = JSON.parse(localStorage.getItem("access"));
+
+      const req = await axios.get(`${BASE_URL}/myGroups`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+
+      dispatch({ type: "GET_GROUP_CHATS", payload: req.data });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+};
+export const getGroups = () => {
+  return async function (dispatch) {
+    try {
+      const token = JSON.parse(localStorage.getItem("access"));
+      // console.log("from getUser:", token);
+
+      const req = await axios.get(`${BASE_URL}/allCroups`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+
+      // setUserProfile(req.data);
+      dispatch({ type: "GET_GROUPS", payload: req.data });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+};
+export const getUserProfile = () => {
+  return async function (dispatch) {
+    try {
+      const token = JSON.parse(localStorage.getItem("access"));
+      // console.log("from getUser:", token);
+
+      const req = await axios.get(`${BASE_URL}/profile`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+
+      // setUserProfile(req.data);
+      dispatch({ type: "SET_USER_PROFILE", payload: req.data });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+};

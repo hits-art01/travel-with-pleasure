@@ -1,7 +1,12 @@
 const currentChatState = {
   chat: {
-    name: null,
-    photo: null,
+    id: "",
+    adminId: [],
+    name: "",
+    avatar: "",
+    description: "",
+    userIds: [],
+    messageIds: [],
   },
 };
 

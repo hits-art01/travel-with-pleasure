@@ -14,7 +14,7 @@
 
 .chat_header {
   max-width: 800px;
-  padding: 15px 25px 15px 35px;
+  padding: 17px 25px 16.5px 35px;
   border-bottom: 1px solid var(--main-accent-red, #fd6d5d);
 }
 
@@ -30,6 +30,11 @@
 
 .chat_header_avatar {
   margin-right: 10px;
+}
+
+.chat_header_avatar img {
+  width: 50px;
+  height: 50px;
 }
 
 .chat_header_titles {
@@ -79,7 +84,7 @@
 } */
 
 .chat_footer {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 
   /* width: 100vw; */
 }
@@ -94,12 +99,13 @@
   justify-content: space-between;
   border-radius: 8px;
   border: 1px solid var(--secondary-background-illustration, #d7d2e6);
+  background: #fff;
 }
 
 .chat_form input {
   border: none;
   color: #d7d2e6;
-
+  width: 100%;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -147,11 +153,8 @@
   position: absolute;
   background: #fff;
 
-  top: 56px;
+  top: 60px;
   left: -321px;
-  height: 800px;
-  width: 370px;
-  padding: 30px 0;
   z-index: 5;
 }
 
@@ -159,6 +162,8 @@
   display: flex;
   flex-direction: column;
   height: 800px;
+  width: 370px;
+  padding: 21.5px 0;
 }
 
 .modal_about {
