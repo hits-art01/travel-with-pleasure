@@ -50,7 +50,8 @@ const Inputs = () => {
     updateToken(localStorage.setItem("access", JSON.stringify(res.data)));
   };
 
-  const handleLogClick = () => {
+  const handleLogClick = (e) => {
+    e.preventDefault();
     if (emailFieldValid && passwordValid) {
       LoginRequest(fields[emailField.name], fields[passwordField.name]);
     }
@@ -58,7 +59,7 @@ const Inputs = () => {
 
   return (
     <div className={`${style.inputs} ${flex.centered_column}`}>
-      <form className={style.username_field}>
+      <form onSubmit={handleLogClick} className={style.username_field}>
         <p className={style.input_header}>Email</p>
         <input
           placeholder={emailField.placeholder}
@@ -72,8 +73,7 @@ const Inputs = () => {
         {fields[emailField.name].length > 0 && !emailFieldValid && (
           <p className={style.message}>{emailField.errorMessage}</p>
         )}
-      </form>
-      <form className={style.password_field}>
+
         <p className={style.input_header}>Password</p>
         <input
           placeholder={passwordField.placeholder}
@@ -89,13 +89,14 @@ const Inputs = () => {
         {fields[passwordField.name].length > 0 && !passwordValid && (
           <p className={style.message}>{passwordField.errorMessage}</p>
         )}
+
+        <button
+          className={`${style.button} ${flex.centered_column}`}
+          onClick={handleLogClick}
+        >
+          Sign in
+        </button>
       </form>
-      <div
-        className={`${style.button} ${flex.centered_column}`}
-        onClick={handleLogClick}
-      >
-        Sign in
-      </div>
     </div>
   );
 };

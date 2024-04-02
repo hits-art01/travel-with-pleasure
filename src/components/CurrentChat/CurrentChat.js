@@ -8,17 +8,63 @@ import FileIcon from "../assets/attach_file icon.png";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import { setMessage } from "../redux/actions/actions";
 
 const CurrentChat = () => {
   const current = useSelector((state) => state.current.chat);
+  const ws = useSelector((state) => state.socket.ws);
+  const messages = useSelector((state) => state.message.messages);
   const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false);
   const isOpenCreate = useSelector((state) => state.createModal.isOpened);
+  const [inputMessage, setInputMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  async function getData() {
+    const res = await fetch(`/chat-list?id=$105`, {
+      method: "GET",
+    });
+
+    if (res.ok) {
+      const { data } = await res.json();
+      return data;
+    }
+  }
+
+  const msgGeneration = (msg, action) => {
+    const newMessage = {
+      nickName: msg.nic,
+      text: msg.text,
+      timeStamp: msg.timeStamp,
+    };
+
+    dispatch(setMessage(newMessage));
+    console.log(messages);
+  };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (ws && ws.readyState) {
+      const obj = {
+        text: inputMessage,
+        nic: "You",
+        timeStamp: new Date().toLocaleString(),
+      };
+      msgGeneration(obj);
+      ws.send(JSON.stringify(obj));
+    } else {
+      console.log("no ws");
+    }
+  };
 
   useEffect(() => {
     setIsChatSettingsVisible(false);
   }, [current]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div
       className={
@@ -115,6 +161,11 @@ const CurrentChat = () => {
           placeholder="Enter new message"
         />
       </div> */}
+      {messages.map((item) => (
+        <div>
+          {item.text} , {item.timeStamp}
+        </div>
+      ))}
       <div
         className={
           isChatSettingsVisible
@@ -122,8 +173,13 @@ const CurrentChat = () => {
             : `${style.chat_footer}`
         }
       >
-        <form className={style.chat_form}>
-          <input type="text" placeholder="Enter new message" />
+        <form className={style.chat_form} onSubmit={sendMessage}>
+          <input
+            type="text"
+            placeholder="Enter new message"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+          />
           <div className={style.form_files}>
             <div className={style.form_file}>
               <img src={FileIcon} />

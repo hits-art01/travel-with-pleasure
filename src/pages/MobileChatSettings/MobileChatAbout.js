@@ -15,11 +15,11 @@ const MobileChatSettings = () => {
   const navigate = useNavigate();
   const currentChat = useSelector((state) => state.current.chat);
 
-  useEffect(() => {
-    if (!currentChat.name) {
-      navigate("/chats");
-    }
-  }, [currentChat]);
+  // useEffect(() => {
+  //   if (!currentChat.name) {
+  //     navigate("/chats");
+  //   }
+  // }, [currentChat]);
 
   return (
     <div className={style.mobile_version_wrap}>

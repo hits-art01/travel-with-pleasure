@@ -112,3 +112,12 @@ export const getUserProfile = () => {
     }
   };
 };
+
+export const setSocket = (payload) => ({
+  type: "SET_SOCKET",
+  payload,
+});
+export const setMessage = (payload) => ({
+  type: "SET_NEW_MESSAGE",
+  payload,
+});

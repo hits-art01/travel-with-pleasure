@@ -9,6 +9,8 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userGroupChatsReducer } from "../reducers/UserGroupChatsReducer";
 import { groupsReducer } from "../reducers/GroupsReducer";
+import { socketReducer } from "../reducers/socketReducer";
+import { messagesReducer } from "../reducers/MessagesReducer";
 
 const Root = combineReducers({
   mobileNav: MobileNavReducer,
@@ -19,6 +21,8 @@ const Root = combineReducers({
   groupChats: userGroupChatsReducer,
   createModal: createModalReducer,
   allGroups: groupsReducer,
+  socket: socketReducer,
+  message: messagesReducer,
 });
 
 export const store = createStore(
