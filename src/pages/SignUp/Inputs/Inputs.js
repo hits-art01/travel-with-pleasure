@@ -51,7 +51,10 @@ const Inputs = () => {
 
   return (
     <div className={`${style.inputs} ${flex.centered_column}`}>
-      <form className={style.username_field}>
+      <form
+        className={`${style.password_field} ${style.username_field} ${style.repeat}`}
+        onSubmit={handleClick}
+      >
         <p className={style.input_header}>User name</p>
         <input
           placeholder={usernameField.placeholder}
@@ -67,8 +70,7 @@ const Inputs = () => {
         {fields[usernameField.name].length > 0 && !usernameValid && (
           <p className={style.message}>{usernameField.errorMessage}</p>
         )}
-      </form>
-      <form className={style.password_field}>
+
         <p className={style.input_header}>Password</p>
         <input
           placeholder={passwordField.placeholder}
@@ -84,8 +86,6 @@ const Inputs = () => {
         {fields[passwordField.name].length > 0 && !passwordValid && (
           <p className={style.message}>{passwordField.errorMessage}</p>
         )}
-      </form>
-      <form className={`${style.password_field} ${style.repeat}`}>
         <p className={style.input_header}>Repeat password</p>
         <input
           placeholder={passwordField.placeholder}
@@ -105,13 +105,14 @@ const Inputs = () => {
           fields.repeat !== fields[passwordField.name] && (
             <p className={style.message}>Password doesn't repeat</p>
           )}
+
+        <button
+          className={`${style.button} ${flex.centered_column}`}
+          // onClick={handleClick}
+        >
+          Sign up
+        </button>
       </form>
-      <button
-        className={`${style.button} ${flex.centered_column}`}
-        onClick={handleClick}
-      >
-        Sign up
-      </button>
     </div>
   );
 };

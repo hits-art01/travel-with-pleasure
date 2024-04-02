@@ -1,20 +1,19 @@
 const messagesState = {
   messages: [
     {
-      user: "",
+      nic: "",
       text: "",
-      photo: "",
-      date: "",
+      timeStamp: "",
     },
   ],
 };
 
-export const currentChatReducer = (state = messagesState, action) => {
+export const messagesReducer = (state = messagesState, action) => {
   switch (action.type) {
     case "SET_NEW_MESSAGE":
       return {
         ...state,
-        ...action.payload,
+        messages: [...state.messages, action.payload],
       };
 
     default:

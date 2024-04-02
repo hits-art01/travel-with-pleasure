@@ -98,7 +98,7 @@ const Inputs = () => {
   };
   return (
     <div className={`${style.inputs} ${flex.centered_column}`}>
-      <form className={style.username_field}>
+      <form className={style.username_field} onSubmit={handleLogClick}>
         <p className={style.input_header}>Name</p>
         <input
           placeholder={first_nameField.placeholder}
@@ -114,8 +114,7 @@ const Inputs = () => {
         {fields[first_nameField.name].length > 0 && !usernameValid && (
           <p className={style.message}>{first_nameField.errorMessage}</p>
         )}
-      </form>
-      <form className={style.username_field}>
+
         <p className={style.input_header}>Surname</p>
         <input
           placeholder={surnameField.placeholder}
@@ -131,8 +130,7 @@ const Inputs = () => {
         {fields[surnameField.name].length > 0 && !surnameValid && (
           <p className={style.message}>{surnameField.errorMessage}</p>
         )}
-      </form>
-      <form className={style.password_field}>
+
         <p className={style.input_header}>Email</p>
         <input
           placeholder={emailField.placeholder}
@@ -146,47 +144,44 @@ const Inputs = () => {
         {fields[emailField.name].length > 0 && !emailValid && (
           <p className={style.message}>{emailField.errorMessage}</p>
         )}
-      </form>
-      {/* <section className={`${style.country} ${flex.centered_column}`}>
+        {/* <section className={`${style.country} ${flex.centered_column}`}>
         <select
           name="select"
           value={fields.country}
           id="select"
           onChange={handleChangeCountry}
           className={style.select}
-        >
+          >
           {countryList.map((country) => (
             <option value={country.country}>
-              {country.flag} {country.country}
+            {country.flag} {country.country}
             </option>
-          ))}
-        </select>
-      </section>
-      <section
-        className={`${style.country} ${flex.centered_column} ${style.gender}`}
-      >
-        <select
-          name="select"
-          value={fields.gender}
+            ))}
+            </select>
+            </section>
+            <section
+            className={`${style.country} ${flex.centered_column} ${style.gender}`}
+            >
+            <select
+            name="select"
+            value={fields.gender}
           id="select"
           onChange={handleChangeGender}
           className={style.select}
-        >
+          >
           {genders.map((gender) => (
             <option value={gender}>{gender}</option>
-          ))}
-        </select>
-      </section>
-      <section className={`${flex.centered_column} ${style.birth}`}>
-        {/* <label for="birth">Your birthday</label> *
-        <input type="date" name="" id="birth" onChange={handleChangeBirth} />
-      </section> */}
-      <div
-        className={`${style.button} ${flex.centered_column}`}
-        onClick={handleLogClick}
-      >
-        Finish
-      </div>
+            ))}
+            </select>
+            </section>
+            <section className={`${flex.centered_column} ${style.birth}`}>
+            {/* <label for="birth">Your birthday</label> *
+            <input type="date" name="" id="birth" onChange={handleChangeBirth} />
+          </section> */}
+        <button className={`${style.button} ${flex.centered_column}`}>
+          Finish
+        </button>
+      </form>
     </div>
   );
 };

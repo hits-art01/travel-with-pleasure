@@ -19,6 +19,8 @@ import {
   getUserProfile,
   openModalCreate,
   setCurrentChat,
+  setMessage,
+  setSocket,
   setUserProfile,
 } from "../../components/redux/actions/actions";
 import CurrentChat from "../../components/CurrentChat/CurrentChat";
@@ -45,11 +47,50 @@ const ChatMainPage = () => {
   const [isChatsSearched, setIsChatSearched] = useState(false);
   const [randomChat, setRandomChat] = useState(null);
 
+  const user_email = "example@box"; // result of authenticateUser
+  let chat_id = "105";
+  // let chat_id = Math.floor(Math.random() * 1000); // test getList
+  let is_private = false;
+  const port = "localhost:7001"; // process.env.PORT
+
+  const socketConnection = () => {
+    const baseUrl = is_private
+      ? `priv-chat-${chat_id}`
+      : `group-chat-${chat_id}`;
+
+    const wsServer = new WebSocket(
+      `ws://${port}/${baseUrl}/user-${user_email}`
+    );
+
+    wsServer.onopen = () => {
+      console.log("WebSocket connected!");
+      dispatch(setSocket(wsServer));
+    };
+
+    wsServer.onmessage = (event) => {
+      const receivedObj = JSON.parse(event.data);
+      msgGeneration(receivedObj, "Income msg");
+    };
+
+    console.log(wsServer);
+  };
+
+  const msgGeneration = (msg, action) => {
+    const newMessage = {
+      nickName: msg.nic,
+      text: msg.text,
+      timeStamp: msg.timeStamp,
+    };
+
+    dispatch(setMessage(newMessage));
+  };
+
   const handleClickChat = (chat) => {
     dispatch(setCurrentChat(chat));
     setIsSearch(false);
     setIsChatSearched(false);
     setQuery("");
+    socketConnection();
   };
 
   const handleClickModal = () => {
